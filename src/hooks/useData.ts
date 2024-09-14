@@ -1,4 +1,4 @@
-import { CanceledError } from "axios";
+import { AxiosRequestConfig, CanceledError } from "axios";
 import { useState, useEffect } from "preact/hooks";
 import ApiClient from "../services/api_client";
 
@@ -9,16 +9,16 @@ interface FetchResponse<T> {
     results: T[]
 }
 
-const useData =<T> (endpoint: string) => {
-    const [data, setUseData]=  useState<T[]>([]);
+const useData =<T> (endpoint: string, requestConfig?: AxiosRequestConfig, deps?: any[]) => {
+    const [data, setData]=  useState<T[]>([]);
     const [error, setError] = useState("");
     const [isLoading, setIsLoading] = useState(false);
       useEffect(() => {
         const controller = new AbortController();
         setIsLoading(true);
-          ApiClient.get<FetchResponse<T>>(endpoint, {signal: controller.signal})
+          ApiClient.get<FetchResponse<T>>(endpoint, {signal: controller.signal ,...requestConfig})
           .then((res) => 
-              {setUseData(res.data.results)
+              {setData(res.data.results)
               setIsLoading(false);
               })
           .catch((err) => {
@@ -28,7 +28,7 @@ const useData =<T> (endpoint: string) => {
           }
           )
           return () => controller.abort();
-      }, [])
+      },deps? [...deps]:[])
     return {data, error, isLoading};
 }
 
