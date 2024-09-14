@@ -6,10 +6,12 @@ import GenreList from './components/GenreList'
 import PlateformSelector from './components/PlateformSelector'
 import { useState } from 'preact/hooks'
 import { Genre } from './hooks/useGenres'
-
+import { Platform } from './hooks/useGames'
+ 
 export function App() {
   
- const [selectedGenre, setSelectedGenre] = useState<Genre | null>(null);
+  const [selectedGenre, setSelectedGenre] = useState<Genre | null>(null);
+  const [selectedPlateform, setSelectedPlateform] = useState<Platform | null>(null);
 
 
   return (
@@ -23,8 +25,8 @@ export function App() {
         </GridItem>
         </Show>
       <GridItem area='main' >
-        <PlateformSelector/>
-        <GameGrid selectedGenre={selectedGenre} />
+        <PlateformSelector selectedPlateform={selectedPlateform} onSelectPlateform={(plateform) => setSelectedPlateform(plateform)}/>
+        <GameGrid selectedPlateform={selectedPlateform} selectedGenre={selectedGenre} />
         </GridItem> 
     </Grid>
   )
