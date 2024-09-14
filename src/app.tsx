@@ -3,6 +3,7 @@ import './app.css'
 import NavBar from './components/NavBar'
 import GameGrid from './components/GameGrid'
 import GenreList from './components/GenreList'
+import PlateformSelector from './components/PlateformSelector'
 import { useState } from 'preact/hooks'
 import { Genre } from './hooks/useGenres'
 
@@ -21,7 +22,8 @@ export function App() {
         <GenreList selecteedGenre={selectedGenre} onSelectGenre={(genre) => setSelectedGenre(genre)}/>
         </GridItem>
         </Show>
-        <GridItem area='main' >
+      <GridItem area='main' >
+        <PlateformSelector/>
         <GameGrid selectedGenre={selectedGenre} />
         </GridItem> 
     </Grid>
